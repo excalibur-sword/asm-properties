@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup
+    Condition="'$(AsmcBeforeTargets)' == '' and '$(AsmcAfterTargets)' == '' and '$(ConfigurationType)' != 'Makefile'">
+    <AsmcBeforeTargets>Midl</AsmcBeforeTargets>
+    <AsmcAfterTargets>CustomBuild</AsmcAfterTargets>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Asmc>
+      <OutputFormat>1</OutputFormat>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ObjectFileName>$(IntDir)%(FileName).asm.obj</ObjectFileName>
+      <PreserveIdentifierCase>0</PreserveIdentifierCase>
+      <WarningLevel>3</WarningLevel>
+      <PackAlignmentBoundary>0</PackAlignmentBoundary>
+      <CallingConvention>0</CallingConvention>
+      <CommandLineTemplate Condition="'$(Platform)' == 'X64'">asmc64.exe /q /nologo /DASMC /e50 [AllOptions] [AdditionalOptions] [Inputs]</CommandLineTemplate>
+      <CommandLineTemplate Condition="'$(Platform)' != 'X64'">echo Asmc not supported on this platform
+exit 1</CommandLineTemplate>
+      <ExecutionDescription>asmc: assembling %(Identity)</ExecutionDescription>
+    </Asmc>
+  </ItemDefinitionGroup>
+</Project>
